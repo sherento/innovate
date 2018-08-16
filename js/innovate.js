@@ -2,6 +2,7 @@
 
 let step = 0;
 let model = null;
+let cube = null;
 let controls = null;
 
 // init renderer
@@ -95,6 +96,16 @@ loader.load("./model.json", function(geometry) {
 });
 // model = new THREE.Mesh(geometry, material);
 
+const cubeGeometry = new THREE.CubeGeometry(0.1, 20, 20);
+const cubeMaterial = new THREE.MeshNormalMaterial({
+  transparent: true,
+  opacity: 0.8
+});
+cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+cube.position.x = 1;
+cube.position.y = 0.8;
+markerRoot.add(cube);
+
 ////animate
 const Controller = new function() {
   this.rotationSpeed = 0.02;
@@ -105,6 +116,7 @@ const animate = () => {
   step = step + Controller.bouncingSpeed;
 
   // model.rotation.x += Controller.rotationSpeed;
+  cube.rotation.y += Controller.rotationSpeed;
 
   renderer.render(scene, camera);
 
