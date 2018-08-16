@@ -95,7 +95,7 @@ const markerControls = new THREEx.ArMarkerControls(
 //   markerRoot.add(model);
 // });
 
-const cubeGeometry = new THREE.CubeGeometry(0.1, 20, 20);
+const cubeGeometry = new THREE.BoxGeometry(0.1, 20, 20);
 const cubeMaterial = new THREE.MeshNormalMaterial({
   transparent: true,
   opacity: 0.8
