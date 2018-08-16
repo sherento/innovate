@@ -1,5 +1,6 @@
 //initialise scene
 let step = 0;
+let dode = null;
 
 //initialise renderer
 const renderer = new THREE.WebGLRenderer({
@@ -67,14 +68,12 @@ onRenderFcts.push(function() {
 });
 
 //marker
-
-// build markerControls
-let markerRoot = new THREE.Group();
-markerRoot.name = "marker1";
-scene.add(markerRoot);
-const modelMarkerControls = new THREEx.ArMarkerControls(
+let markerRoot1 = new THREE.Group();
+markerRoot1.name = "marker1";
+scene.add(markerRoot1);
+const dodeMarkerControls = new THREEx.ArMarkerControls(
   arToolkitContext,
-  markerRoot,
+  markerRoot1,
   {
     type: "pattern",
     patternUrl: THREEx.ArToolkitContext.baseURL + "image/pattern-letterA.patt"
@@ -82,26 +81,49 @@ const modelMarkerControls = new THREEx.ArMarkerControls(
 );
 
 // add a gizmo in the center of the marker
-const mltLoader = new THREE.MTLLoader();
-mtlLoader.load("image/bg4.mtl", function(materials) {
-  materials.preload();
-  const objLoader = new THREE.OBJLoader();
-  objLoader.setMaterials(materials);
-
-  objLoader.load("image/bg4.obj", function(mesh) {
-    mesh.transverse(function(node) {
-      if (node instanceof THREE.Mesh) {
-        node.castShadow = true;
-        node.receiveShadow = true;
-      }
-    });
-
-    scene.add(mesh);
-    mesh.position.set(-3, 0, 4);
-    mesh.rotation.y = -Math.PI / 4;
-  });
+const dodeGeometry = new THREE.DodecahedronGeometry(0.3, 0);
+const dodeMaterial = new THREE.MeshNormalMaterial({
+  transparent: true,
+  opacity: 0.8,
+  side: THREE.DoubleSide
 });
-markerRoot.add(mltLoader);
+dode = new THREE.Mesh(dodeGeometry, dodeMaterial);
+markerRoot1.add(dode);
+
+// build markerControls
+// let markerRoot = new THREE.Group();
+// markerRoot.name = "marker1";
+// scene.add(markerRoot);
+// const modelMarkerControls = new THREEx.ArMarkerControls(
+//   arToolkitContext,
+//   markerRoot,
+//   {
+//     type: "pattern",
+//     patternUrl: THREEx.ArToolkitContext.baseURL + "image/pattern-letterA.patt"
+//   }
+// );
+
+// add a gizmo in the center of the marker
+// const mltLoader = new THREE.MTLLoader();
+// mtlLoader.load("image/bg4.mtl", function(materials) {
+//   materials.preload();
+//   const objLoader = new THREE.OBJLoader();
+//   objLoader.setMaterials(materials);
+
+//   objLoader.load("image/bg4.obj", function(mesh) {
+//     mesh.transverse(function(node) {
+//       if (node instanceof THREE.Mesh) {
+//         node.castShadow = true;
+//         node.receiveShadow = true;
+//       }
+//     });
+
+//     scene.add(mesh);
+//     mesh.position.set(-3, 0, 4);
+//     mesh.rotation.y = -Math.PI / 4;
+//   });
+// });
+// markerRoot.add(mltLoader);
 //instantiates a loader
 // const loader = new THREE.OBJLoader();
 
@@ -146,7 +168,7 @@ init = () => {
 
 window.onload = init;
 
-markerRoot = scene.getObjectByName("marker1");
+markerRoot1 = scene.getObjectByName("marker1");
 
 // render the scene
 onRenderFcts.push(function() {
