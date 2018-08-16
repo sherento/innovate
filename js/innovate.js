@@ -82,24 +82,43 @@ const modelMarkerControls = new THREEx.ArMarkerControls(
 );
 
 // add a gizmo in the center of the marker
+const mltLoader = new THREE.MTLLoader();
+mtlLoader.load("image/bg4.mtl", function(materials) {
+  materials.preload();
+  const objLoader = new THREE.OBJLoader();
+  objLoader.setMaterials(materials);
 
+  objLoader.load("image/bg4.obj", function(mesh) {
+    mesh.transverse(function(node) {
+      if (node instanceof THREE.Mesh) {
+        node.castShadow = true;
+        node.receiveShadow = true;
+      }
+    });
+
+    scene.add(mesh);
+    mesh.position.set(-3, 0, 4);
+    mesh.rotation.y = -Math.PI / 4;
+  });
+});
+markerRoot.add(mltLoader);
 //instantiates a loader
-const loader = new THREE.OBJLoader();
+// const loader = new THREE.OBJLoader();
 
-loader.load("image/model.obj", function(object) {
-  scene.add(object);
-});
+// loader.load("image/model.obj", function(object) {
+//   scene.add(object);
+// });
 
-//load a resource
-const geometry = new THREE.BufferGeometry();
-const material = new THREE.MeshNormalMaterial({
-  transparent: true,
-  opacity: 0.8
-});
-object = new THREE.Mesh(geometry, material);
-object.position.x = 1;
-object.position.y = 0.8;
-markerRoot.add(object);
+// //load a resource
+// const geometry = new THREE.BufferGeometry();
+// const material = new THREE.MeshNormalMaterial({
+//   transparent: true,
+//   opacity: 0.8
+// });
+// object = new THREE.Mesh(geometry, material);
+// object.position.x = 1;
+// object.position.y = 0.8;
+// markerRoot.add(object);
 
 //animate
 
