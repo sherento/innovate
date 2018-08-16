@@ -82,11 +82,11 @@ const modelMarkerControls = new THREEx.ArMarkerControls(
 );
 
 // add a gizmo in the center of the marker
-//instantiates a loader
-const loader = new THREE.OBJLoader();
 
 //load a resource
 const modelGeometry = new Promise(resolve => {
+  //instantiates a loader
+  const loader = new THREE.OBJLoader();
   loader.load("image/model.obj", geometry => {
     resolve(geometry);
   });
@@ -110,7 +110,7 @@ const Controller = new function() {
 const animate = () => {
   step = step + Controller.bouncingSpeed;
 
-  model.rotation.x += Controller.rotationSpeed;
+  object.rotation.x += Controller.rotationSpeed;
 
   cube.position.y = Math.abs(Math.sin(step));
 
