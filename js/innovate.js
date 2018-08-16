@@ -86,6 +86,13 @@ const markerControls = new THREEx.ArMarkerControls(
   }
 );
 
+function initModel() {
+  const loader = new THREE.JSONLoader();
+  loader.load(".model.json", function(geometry) {
+    model = new THREE.Model(geometry);
+    scene.add(model);
+  });
+}
 // add a gizmo in the center of the marker
 // const geometry = new THREE.DodecahedronGeometry(0.3, 0);
 // const material = new THREE.MeshNormalMaterial({
@@ -96,27 +103,28 @@ const markerControls = new THREEx.ArMarkerControls(
 // model = new THREE.Mesh(geometry, material);
 // markerRoot.add(model);
 
-const mltLoader = new THREE.MTLLoader();
-mtlLoader.load("image/bg4.mtl", function(materials) {
-  materials.preload();
-  const objLoader = new THREE.OBJLoader();
-  objLoader.setMaterials(materials);
+//loading the model
+// const mltLoader = new THREE.MTLLoader();
+// mtlLoader.load("image/bg4.mtl", function(materials) {
+//   materials.preload();
+//   const objLoader = new THREE.OBJLoader();
+//   objLoader.setMaterials(materials);
 
-  objLoader.load("image/bg4.obj", function(mesh) {
-    mesh.transverse(function(node) {
-      if (node instanceof THREE.Mesh) {
-        node.castShadow = true;
-        node.receiveShadow = true;
-      }
-    });
+//   objLoader.load("image/bg4.obj", function(mesh) {
+//     mesh.transverse(function(node) {
+//       if (node instanceof THREE.Mesh) {
+//         node.castShadow = true;
+//         node.receiveShadow = true;
+//       }
+//     });
 
-    scene.add(mesh);
-    mesh.position.set(-3, 0, 4);
-    mesh.rotation.y = -Math.PI / 4;
-  });
-});
-model = new THREE.Mesh(objLoader, mtlLoader);
-markerRoot.add(model);
+//     scene.add(mesh);
+//     mesh.position.set(-3, 0, 4);
+//     mesh.rotation.y = -Math.PI / 4;
+//   });
+// });
+// model = new THREE.Mesh(objLoader, mtlLoader);
+// markerRoot.add(model);
 
 ////animate
 const Controller = new function() {
