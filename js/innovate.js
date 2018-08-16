@@ -1,8 +1,10 @@
-//initialise scene
+//Initilise the scene
+
 let step = 0;
 let dode = null;
+let controls = null;
 
-//initialise renderer
+// init renderer
 const renderer = new THREE.WebGLRenderer({
   antialias: true,
   alpha: true
@@ -21,11 +23,13 @@ let onRenderFcts = [];
 const scene = new THREE.Scene();
 
 //Initialise a basic camera
+
 // Create a camera
 const camera = new THREE.PerspectiveCamera();
 scene.add(camera);
 
-//arToolkitSource
+//handle arToolkitSource
+
 const arToolkitSource = new THREEx.ArToolkitSource({
   // to read from the webcam
   sourceType: "webcam"
@@ -46,8 +50,8 @@ function onResize() {
     arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas);
   }
 }
-
 //initialise arToolkitContext
+
 // create atToolkitContext
 const arToolkitContext = new THREEx.ArToolkitContext({
   cameraParametersUrl:
@@ -67,7 +71,9 @@ onRenderFcts.push(function() {
   arToolkitContext.update(arToolkitSource.domElement);
 });
 
-//marker
+//markerRoot1
+
+// build markerControls
 let markerRoot1 = new THREE.Group();
 markerRoot1.name = "marker1";
 scene.add(markerRoot1);
@@ -90,59 +96,7 @@ const dodeMaterial = new THREE.MeshNormalMaterial({
 dode = new THREE.Mesh(dodeGeometry, dodeMaterial);
 markerRoot1.add(dode);
 
-// build markerControls
-// let markerRoot = new THREE.Group();
-// markerRoot.name = "marker1";
-// scene.add(markerRoot);
-// const modelMarkerControls = new THREEx.ArMarkerControls(
-//   arToolkitContext,
-//   markerRoot,
-//   {
-//     type: "pattern",
-//     patternUrl: THREEx.ArToolkitContext.baseURL + "image/pattern-letterA.patt"
-//   }
-// );
-
-// add a gizmo in the center of the marker
-// const mltLoader = new THREE.MTLLoader();
-// mtlLoader.load("image/bg4.mtl", function(materials) {
-//   materials.preload();
-//   const objLoader = new THREE.OBJLoader();
-//   objLoader.setMaterials(materials);
-
-//   objLoader.load("image/bg4.obj", function(mesh) {
-//     mesh.transverse(function(node) {
-//       if (node instanceof THREE.Mesh) {
-//         node.castShadow = true;
-//         node.receiveShadow = true;
-//       }
-//     });
-
-//     scene.add(mesh);
-//     mesh.position.set(-3, 0, 4);
-//     mesh.rotation.y = -Math.PI / 4;
-//   });
-// });
-// markerRoot.add(mltLoader);
-//instantiates a loader
-// const loader = new THREE.OBJLoader();
-
-// loader.load("image/model.obj", function(object) {
-//   scene.add(object);
-// });
-
-// //load a resource
-// const geometry = new THREE.BufferGeometry();
-// const material = new THREE.MeshNormalMaterial({
-//   transparent: true,
-//   opacity: 0.8
-// });
-// object = new THREE.Mesh(geometry, material);
-// object.position.x = 1;
-// object.position.y = 0.8;
-// markerRoot.add(object);
-
-//animate
+////animate
 
 const Controller = new function() {
   this.rotationSpeed = 0.02;
@@ -152,7 +106,7 @@ const Controller = new function() {
 const animate = () => {
   step = step + Controller.bouncingSpeed;
 
-  object.rotation.x += Controller.rotationSpeed;
+  dode.rotation.x += Controller.rotationSpeed;
 
   renderer.render(scene, camera);
 
