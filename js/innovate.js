@@ -83,19 +83,20 @@ const modelMarkerControls = new THREEx.ArMarkerControls(
 
 // add a gizmo in the center of the marker
 
-//load a resource
-const modelGeometry = new Promise(resolve => {
-  //instantiates a loader
-  const loader = new THREE.OBJLoader();
-  loader.load("image/model.obj", geometry => {
-    resolve(geometry);
-  });
+//instantiates a loader
+const loader = new THREE.OBJLoader();
+
+loader.load("image/model.obj", function(object) {
+  scene.add(object);
 });
+
+//load a resource
+const geometry = new THREE.BufferGeometry();
 const material = new THREE.MeshNormalMaterial({
   transparent: true,
   opacity: 0.8
 });
-object = new THREE.Mesh(modelGeometry, material);
+object = new THREE.Mesh(geometry, material);
 object.position.x = 1;
 object.position.y = 0.8;
 markerRoot.add(object);
@@ -111,15 +112,6 @@ const animate = () => {
   step = step + Controller.bouncingSpeed;
 
   object.rotation.x += Controller.rotationSpeed;
-
-  cube.position.y = Math.abs(Math.sin(step));
-
-  cube.rotation.x += Controller.rotationSpeed;
-  cube.rotation.y += Controller.rotationSpeed;
-  cube.rotation.z += Controller.rotationSpeed;
-
-  sphere.position.x = Math.cos(step) * 0.5;
-  sphere.position.y = Math.abs(Math.sin(step));
 
   renderer.render(scene, camera);
 
