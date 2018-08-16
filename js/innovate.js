@@ -1,7 +1,7 @@
 //Initilise the scene
 
 let step = 0;
-let dode = null;
+let model = null;
 let controls = null;
 
 // init renderer
@@ -71,15 +71,15 @@ onRenderFcts.push(function() {
   arToolkitContext.update(arToolkitSource.domElement);
 });
 
-//markerRoot1
+//markerRoot
 
 // build markerControls
-let markerRoot1 = new THREE.Group();
-markerRoot1.name = "marker1";
-scene.add(markerRoot1);
-const dodeMarkerControls = new THREEx.ArMarkerControls(
+let markerRoot = new THREE.Group();
+markerRoot.name = "marker";
+scene.add(markerRoot);
+const markerControls = new THREEx.ArMarkerControls(
   arToolkitContext,
-  markerRoot1,
+  markerRoot,
   {
     type: "pattern",
     patternUrl: THREEx.ArToolkitContext.baseURL + "image/pattern-letterA.patt"
@@ -87,14 +87,14 @@ const dodeMarkerControls = new THREEx.ArMarkerControls(
 );
 
 // add a gizmo in the center of the marker
-const dodeGeometry = new THREE.DodecahedronGeometry(0.3, 0);
-const dodeMaterial = new THREE.MeshNormalMaterial({
+const geometry = new THREE.DodecahedronGeometry(0.3, 0);
+const material = new THREE.MeshNormalMaterial({
   transparent: true,
   opacity: 0.8,
   side: THREE.DoubleSide
 });
-dode = new THREE.Mesh(dodeGeometry, dodeMaterial);
-markerRoot1.add(dode);
+model = new THREE.Mesh(geometry, material);
+markerRoot.add(model);
 
 ////animate
 const Controller = new function() {
@@ -105,7 +105,7 @@ const Controller = new function() {
 const animate = () => {
   step = step + Controller.bouncingSpeed;
 
-  dode.rotation.x += Controller.rotationSpeed;
+  model.rotation.x += Controller.rotationSpeed;
 
   renderer.render(scene, camera);
 
@@ -121,7 +121,7 @@ init = () => {
 
 window.onload = init;
 
-markerRoot1 = scene.getObjectByName("marker1");
+markerRoot = scene.getObjectByName("marker");
 
 // render the scene
 onRenderFcts.push(function() {
