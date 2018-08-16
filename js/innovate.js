@@ -97,12 +97,12 @@ const markerControls = new THREEx.ArMarkerControls(
 // markerRoot.add(model);
 
 const mltLoader = new THREE.MTLLoader();
-mtlLoader.load(".mtl", function(materials) {
+mtlLoader.load("image/bg4.mtl", function(materials) {
   materials.preload();
   const objLoader = new THREE.OBJLoader();
   objLoader.setMaterials(materials);
 
-  objLoader.load(".obj", function(mesh) {
+  objLoader.load("image/bg4.obj", function(mesh) {
     mesh.transverse(function(node) {
       if (node instanceof THREE.Mesh) {
         node.castShadow = true;
