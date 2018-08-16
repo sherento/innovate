@@ -95,14 +95,14 @@ const markerControls = new THREEx.ArMarkerControls(
 //   markerRoot.add(model);
 // });
 
-const cubeGeometry = new THREE.BoxGeometry(0.1, 20, 20);
+const cubeGeometry = new THREE.CubeGeometry(0.3, 0.3, 0.3);
 const cubeMaterial = new THREE.MeshNormalMaterial({
   transparent: true,
   opacity: 0.8
+  // side: THREE.DoubleSide
 });
 cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-cube.position.x = 1;
-cube.position.y = 0.8;
+cube.position.y = 0.1;
 markerRoot.add(cube);
 
 ////animate
