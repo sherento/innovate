@@ -88,13 +88,12 @@ const markerControls = new THREEx.ArMarkerControls(
 );
 
 // add a gizmo in the center of the marker
-const loader = new THREE.JSONLoader();
-loader.load("./model.json", function(geometry) {
-  model = new THREE.Mesh(geometry);
-  scene.add(model);
-  markerRoot.add(model);
-});
-// model = new THREE.Mesh(geometry, material);
+// const loader = new THREE.JSONLoader();
+// loader.load("./model.json", function(geometry) {
+//   model = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+//   scene.add(model);
+//   markerRoot.add(model);
+// });
 
 const cubeGeometry = new THREE.CubeGeometry(0.1, 20, 20);
 const cubeMaterial = new THREE.MeshNormalMaterial({
