@@ -86,45 +86,14 @@ const markerControls = new THREEx.ArMarkerControls(
   }
 );
 
-function initModel() {
-  const loader = new THREE.JSONLoader();
-  loader.load(".model.json", function(geometry) {
-    model = new THREE.Model(geometry);
-    scene.add(model);
-  });
-}
 // add a gizmo in the center of the marker
-// const geometry = new THREE.DodecahedronGeometry(0.3, 0);
-// const material = new THREE.MeshNormalMaterial({
-//   transparent: true,
-//   opacity: 0.8,
-//   side: THREE.DoubleSide
-// });
+const loader = new THREE.JSONLoader();
+loader.load("./model.json", function(geometry) {
+  model = new THREE.Model(geometry);
+  scene.add(model);
+  markerRoot.add(model);
+});
 // model = new THREE.Mesh(geometry, material);
-// markerRoot.add(model);
-
-//loading the model
-// const mltLoader = new THREE.MTLLoader();
-// mtlLoader.load("image/bg4.mtl", function(materials) {
-//   materials.preload();
-//   const objLoader = new THREE.OBJLoader();
-//   objLoader.setMaterials(materials);
-
-//   objLoader.load("image/bg4.obj", function(mesh) {
-//     mesh.transverse(function(node) {
-//       if (node instanceof THREE.Mesh) {
-//         node.castShadow = true;
-//         node.receiveShadow = true;
-//       }
-//     });
-
-//     scene.add(mesh);
-//     mesh.position.set(-3, 0, 4);
-//     mesh.rotation.y = -Math.PI / 4;
-//   });
-// });
-// model = new THREE.Mesh(objLoader, mtlLoader);
-// markerRoot.add(model);
 
 ////animate
 const Controller = new function() {
@@ -135,14 +104,13 @@ const Controller = new function() {
 const animate = () => {
   step = step + Controller.bouncingSpeed;
 
-  model.rotation.x += Controller.rotationSpeed;
+  // model.rotation.x += Controller.rotationSpeed;
 
   renderer.render(scene, camera);
 
   requestAnimationFrame(animate);
 };
 
-//
 init = () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.render(scene, camera);
