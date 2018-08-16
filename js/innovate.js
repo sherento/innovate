@@ -1,7 +1,7 @@
 //Initilise the scene
 
 let step = 0;
-let mltLoader = null;
+let model = null;
 let controls = null;
 
 // init renderer
@@ -115,7 +115,8 @@ mtlLoader.load("image/bg4.mtl", function(materials) {
     mesh.rotation.y = -Math.PI / 4;
   });
 });
-markerRoot.add(mltLoader);
+model = new THREE.Mesh(objLoader, mtlLoader);
+markerRoot.add(model);
 
 ////animate
 const Controller = new function() {
@@ -126,7 +127,7 @@ const Controller = new function() {
 const animate = () => {
   step = step + Controller.bouncingSpeed;
 
-  mltLoader.rotation.x += Controller.rotationSpeed;
+  model.rotation.x += Controller.rotationSpeed;
 
   renderer.render(scene, camera);
 
