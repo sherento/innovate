@@ -89,7 +89,7 @@ const markerControls = new THREEx.ArMarkerControls(
 // add a gizmo in the center of the marker
 const loader = new THREE.JSONLoader();
 loader.load("./model.json", function(geometry) {
-  model = new THREE.Model(geometry);
+  model = new THREE.Mesh(geometry);
   scene.add(model);
   markerRoot.add(model);
 });
