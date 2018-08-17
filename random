@@ -342,3 +342,75 @@ requestAnimationFrame(function animate(nowMsec) {
 
   </body>
 </html>
+
+
+
+<html>
+  <head>
+  <title>Pattern marker example with Three.js</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <style>
+  html,body { margin: 0; padding: 0; width: 100%; text-align: center; overflow-x: hidden; }
+  .portrait canvas { transform-origin: 0 0; transform: rotate(-90deg) translateX(-100%); }
+  .desktop canvas { transform: scale(-1, 1); }
+  </style>
+  </head>
+  <body>
+
+<script defer src='js/artoolkit.min.js'></script>
+<script defer src='three.min.js'></script>
+<script defer src='three.js'></script>
+<script defer src='GLTF2Loader.js'></script>
+
+<script defer>
+  window.ARThreeOnLoad = function() {
+    ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: 'image/camera_para.dat',
+      onSuccess: function(arScene, arController, arCamera) {
+        var scene = new THREE.Scene();
+        var renderer = new THREE.WebGLRenderer({
+          antialias: true,
+        });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var ambient = new THREE.AmbientLight(0x222222);
+        ambient.intensity = 5;
+        arScene.scene.add(ambient);
+
+        // Instantiate a loader
+        var loader = new THREE.GLTF2Loader();
+        // Load a glTF resource
+        var url = './image/bg4.gltf';
+        loader.load(url, function (gltf) {
+          sphere = gltf.scene || gltf.scenes[0];
+          sphere.rotation.x = 90 * (Math.PI / 180);
+          sphere.rotation.y = 270 * (Math.PI / 180);
+          sphere.rotation.z = 0 * (Math.PI / 180);
+
+        arController.loadMarker('image/pattern-letterA.patt', function(markerId) {
+          var markerRoot = arController.createThreeMarker(markerId);
+          markerRoot.add(sphere);
+          arScene.scene.add(markerRoot);
+        });
+
+        });
+
+        var tick = function() {
+          arScene.process();
+          arScene.renderOn(renderer);
+          requestAnimationFrame(tick);
+        };
+        tick();
+      }
+    });
+    delete window.ARThreeOnLoad;
+  };
+
+      if (window.ARController && ARController.getUserMediaThreeScene) {
+        ARThreeOnLoad();
+      }
+    </script>
+
+  </body>
+</html>

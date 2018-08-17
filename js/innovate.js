@@ -1,5 +1,4 @@
 //Initilise the scene
-
 let step = 0;
 let model = null;
 let controls = null;
@@ -43,6 +42,7 @@ arToolkitSource.init(function onReady() {
 window.addEventListener("resize", function() {
   onResize();
 });
+
 function onResize() {
   arToolkitSource.onResizeElement();
   arToolkitSource.copyElementSizeTo(renderer.domElement);
@@ -83,13 +83,11 @@ onRenderFcts.push(function() {
 // //light.intensity = 1;
 // scene.add(light);
 
-var ambient = new THREE.AmbientLight(0x222222);
+const ambient = new THREE.AmbientLight(0x222222);
 ambient.intensity = 5;
-arScene.scene.add(ambient);
+scene.add(ambient);
 
 //markerRoot
-// Instantiate a loader
-var loader = new THREE.GLTF2Loader();
 
 // build markerControls
 let markerRoot = new THREE.Group();
@@ -104,9 +102,11 @@ const markerControls = new THREEx.ArMarkerControls(
   }
 );
 
+// Instantiate a loader
+const loader = new THREE.GLTF2Loader();
 // Load a glTF resource
-var url = './image/bg4.gltf';
-loader.load(url, function (gltf) {
+var url = "./image/bg4.gltf";
+loader.load(url, function(gltf) {
   model = gltf.scene || gltf.scenes[0];
   model.rotation.x = 90 * (Math.PI / 180);
   model.rotation.y = 270 * (Math.PI / 180);
@@ -116,9 +116,9 @@ loader.load(url, function (gltf) {
   //   var markerRoot = arController.createThreeMarker(markerId);
   //   markerRoot.add(sphere);
   //   arScene.scene.add(markerRoot);
-  // });
-  markerRoot.add(model);
 
+  markerRoot.add(model);
+});
 // add a gizmo in the center of the marker
 // const loader = new THREE.JSONLoader();
 // loader.load("./model.json", function(geometry) {
