@@ -1,7 +1,9 @@
-//Initilise the scene
+//////////////////////////////////////////////////////////////////////////////////
+//		Initilise the scene
+//////////////////////////////////////////////////////////////////////////////////
 
 let step = 0;
-let model = null;
+let cube = null;
 let controls = null;
 
 // init renderer
@@ -22,13 +24,17 @@ let onRenderFcts = [];
 // init scene and camera
 const scene = new THREE.Scene();
 
-//Initialise a basic camera
+//////////////////////////////////////////////////////////////////////////////////
+//		Initialise a basic camera
+//////////////////////////////////////////////////////////////////////////////////
 
 // Create a camera
 const camera = new THREE.PerspectiveCamera();
 scene.add(camera);
 
-//handle arToolkitSource
+////////////////////////////////////////////////////////////////////////////////
+//          handle arToolkitSource
+////////////////////////////////////////////////////////////////////////////////
 
 const arToolkitSource = new THREEx.ArToolkitSource({
   // to read from the webcam
@@ -50,7 +56,9 @@ function onResize() {
     arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas);
   }
 }
-//initialise arToolkitContext
+////////////////////////////////////////////////////////////////////////////////
+//          initialise arToolkitContext
+////////////////////////////////////////////////////////////////////////////////
 
 // create atToolkitContext
 const arToolkitContext = new THREEx.ArToolkitContext({
@@ -71,15 +79,17 @@ onRenderFcts.push(function() {
   arToolkitContext.update(arToolkitSource.domElement);
 });
 
-//markerRoot
+//////////////////////////////////////////////////////////////////////////////
+//		markerRoot1
+//////////////////////////////////////////////////////////////////////////////
 
 // build markerControls
-let markerRoot = new THREE.Group();
-markerRoot.name = "marker";
-scene.add(markerRoot);
-const markerControls = new THREEx.ArMarkerControls(
+let markerRoot1 = new THREE.Group();
+markerRoot1.name = "marker1";
+scene.add(markerRoot1);
+const dodeMarkerControls = new THREEx.ArMarkerControls(
   arToolkitContext,
-  markerRoot,
+  markerRoot1,
   {
     type: "pattern",
     patternUrl: THREEx.ArToolkitContext.baseURL + "image/pattern-letterA.patt"
@@ -87,14 +97,20 @@ const markerControls = new THREEx.ArMarkerControls(
 );
 
 // add a gizmo in the center of the marker
-const loader = new THREE.JSONLoader();
-loader.load("./model.json", function(geometry) {
-  model = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-  scene.add(model);
-  markerRoot.add(model);
+const cubeGeometry = new THREE.CubeGeometry(0.3, 0.3, 0.3);
+const cubeMaterial = new THREE.MeshNormalMaterial({
+  transparent: true,
+  opacity: 0.8
+  // side: THREE.DoubleSide
 });
+cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+cube.position.y = 0.1;
+markerRoot1.add(cube);
 
+///////////////////////////////////////////////////////////////////////////////
 ////animate
+/////////////////////////////////////////////////////////////////////////////
+
 const Controller = new function() {
   this.rotationSpeed = 0.02;
   this.bouncingSpeed = 0.02;
@@ -103,13 +119,23 @@ const Controller = new function() {
 const animate = () => {
   step = step + Controller.bouncingSpeed;
 
-  // model.rotation.x += Controller.rotationSpeed;
+  dode.rotation.x += Controller.rotationSpeed;
+
+  cube.position.y = Math.abs(Math.sin(step));
+
+  cube.rotation.x += Controller.rotationSpeed;
+  cube.rotation.y += Controller.rotationSpeed;
+  cube.rotation.z += Controller.rotationSpeed;
+
+  sphere.position.x = Math.cos(step) * 0.5;
+  sphere.position.y = Math.abs(Math.sin(step));
 
   renderer.render(scene, camera);
 
   requestAnimationFrame(animate);
 };
 
+//
 init = () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.render(scene, camera);
@@ -118,7 +144,7 @@ init = () => {
 
 window.onload = init;
 
-markerRoot = scene.getObjectByName("marker");
+markerRoot1 = scene.getObjectByName("marker1");
 
 // render the scene
 onRenderFcts.push(function() {
