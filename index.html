@@ -33,31 +33,14 @@
         arScene.scene.add(ambient);
 
         // Instantiate a loader
-        // var loader = new THREE.GLTF2Loader();
+        var loader = new THREE.GLTF2Loader();
         // Load a glTF resource
-        // var url = './models/model.gltf';
-        // loader.load(url, function (gltf) {
-        //   sphere = gltf.scene || gltf.scenes[0];
-        //   sphere.rotation.x = 90 * (Math.PI / 180);
-        //   sphere.rotation.y = 270 * (Math.PI / 180);
-        //   sphere.rotation.z = 0 * (Math.PI / 180);
-
-        var mtlLoader = new THREE.MTLLoader();
-          mtlLoader.setPath('./image');
-          mtlLoader.setCrossOrigin('anonymous');
-          mtlLoader.load('bg4.mtl', function (materials) {
-          materials.preload();
-          var objLoader = new THREE.OBJLoader();
-          objLoader.setMaterials(materials);
-          objLoader.setPath('./image');
-          objLoader.load('bg4.obj', function (object) {
-            object.position.y = 0.7;
-            scene.add(object);
-            onRenderFcts.push(function () {
-              object.rotation.y += 0.01;
-            });
-          });
-        });
+        var url = './image/bg4.gltf';
+        loader.load(url, function (gltf) {
+          sphere = gltf.scene || gltf.scenes[0];
+          sphere.rotation.x = 90 * (Math.PI / 180);
+          sphere.rotation.y = 270 * (Math.PI / 180);
+          sphere.rotation.z = 0 * (Math.PI / 180);
 
         arController.loadMarker('image/pattern-letterA.patt', function(markerId) {
           var markerRoot = arController.createThreeMarker(markerId);
@@ -65,7 +48,7 @@
           arScene.scene.add(markerRoot);
         });
 
-        // });
+        });
 
         var tick = function() {
           arScene.process();
