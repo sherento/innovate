@@ -111,6 +111,10 @@ loader.load("image/bg4.gltf", function(gltf) {
   model.rotation.y = 270 * (Math.PI / 180);
   model.rotation.z = 0 * (Math.PI / 180);
 
+  model = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+  model.scale.x = 100;
+  model.scale.y = 100;
+
   // arController.loadMarker('image/pattern-letterA.patt', function (markerId) {
   //   var markerRoot = arController.createThreeMarker(markerId);
   //   markerRoot.add(sphere);
