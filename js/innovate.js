@@ -103,7 +103,7 @@ const markerControls = new THREEx.ArMarkerControls(
 );
 
 // Instantiate a loader
-const loader = new THREE.GLTF2Loader();
+const loader = new THREE.GLTFLoader();
 
 // Load a glTF resource
 loader.load("image/bg4.gltf", function(gltf) {
