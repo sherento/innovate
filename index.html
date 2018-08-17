@@ -1,37 +1,15 @@
 
-<!-- <!DOCTYPE html> -->
-<!-- <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"> -->
-<!-- three.js library -->
-<!-- <script src='three.js'></script> -->
-
-<!-- <script src="ar.js"></script> -->
-
-<!-- <script src="js/OBJLoader.js"></script> -->
-<!-- <script src="js/MTLLoader.js"></script> -->
-
-<!-- <script>THREEx.ArToolkitContext.baseURL = ''</script> -->
-
-<!-- <body style='margin : 0px; overflow: hidden; font-family: Monospace;'> -->
-
-	<!-- <div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'></div> -->
-
-  <!-- <script src="js/main.js"></script> -->
-  <!-- <script src="js/innovate.js"></script> -->
-  <!-- <script src="js/cube.js"></script> -->
-
-<!-- </body> -->
-
 <html>
-<head>
-<title>Pattern marker example with Three.js</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<style>
-html,body { margin: 0; padding: 0; width: 100%; text-align: center; overflow-x: hidden; }
-.portrait canvas { transform-origin: 0 0; transform: rotate(-90deg) translateX(-100%); }
-.desktop canvas { transform: scale(-1, 1); }
-</style>
-</head>
-<body>
+  <head>
+  <title>Pattern marker example with Three.js</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <style>
+  html,body { margin: 0; padding: 0; width: 100%; text-align: center; overflow-x: hidden; }
+  .portrait canvas { transform-origin: 0 0; transform: rotate(-90deg) translateX(-100%); }
+  .desktop canvas { transform: scale(-1, 1); }
+  </style>
+  </head>
+  <body>
 
 <script defer src='//rawcdn.githack.com/artoolkit/jsartoolkit5/77733182a4c519b8e683cbf246a22920d94f3deb/build/artoolkit.min.js'></script>
 <script defer src='//rawcdn.githack.com/mrdoob/three.js/r84/build/three.min.js'></script>
@@ -65,29 +43,29 @@ html,body { margin: 0; padding: 0; width: 100%; text-align: center; overflow-x: 
         //   sphere.rotation.z = 0 * (Math.PI / 180);
 
         var mtlLoader = new THREE.MTLLoader();
-mtlLoader.setPath('./image');
-mtlLoader.setCrossOrigin('anonymous');
-mtlLoader.load('bg4.mtl', function (materials) {
-  materials.preload();
-  var objLoader = new THREE.OBJLoader();
-  objLoader.setMaterials(materials);
-  objLoader.setPath('./image');
-  objLoader.load('bg4.obj', function (object) {
-    object.position.y = 0.7;
-    scene.add(object);
-    onRenderFcts.push(function () {
-      object.rotation.y += 0.01;
-    });
-  });
-});
-
-          arController.loadMarker('image/pattern-letterA.patt', function(markerId) {
-            var markerRoot = arController.createThreeMarker(markerId);
-            markerRoot.add(sphere);
-            arScene.scene.add(markerRoot);
+          mtlLoader.setPath('./image');
+          mtlLoader.setCrossOrigin('anonymous');
+          mtlLoader.load('bg4.mtl', function (materials) {
+          materials.preload();
+          var objLoader = new THREE.OBJLoader();
+          objLoader.setMaterials(materials);
+          objLoader.setPath('./image');
+          objLoader.load('bg4.obj', function (object) {
+            object.position.y = 0.7;
+            scene.add(object);
+            onRenderFcts.push(function () {
+              object.rotation.y += 0.01;
+            });
           });
-
         });
+
+        arController.loadMarker('image/pattern-letterA.patt', function(markerId) {
+          var markerRoot = arController.createThreeMarker(markerId);
+          markerRoot.add(sphere);
+          arScene.scene.add(markerRoot);
+        });
+
+        // });
 
         var tick = function() {
           arScene.process();
@@ -100,10 +78,10 @@ mtlLoader.load('bg4.mtl', function (materials) {
     delete window.ARThreeOnLoad;
   };
 
-  if (window.ARController && ARController.getUserMediaThreeScene) {
-    ARThreeOnLoad();
-  }
-</script>
+      if (window.ARController && ARController.getUserMediaThreeScene) {
+        ARThreeOnLoad();
+      }
+    </script>
 
-</body>
+  </body>
 </html>
