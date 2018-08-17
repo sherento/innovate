@@ -105,8 +105,7 @@ const markerControls = new THREEx.ArMarkerControls(
 // Instantiate a loader
 const loader = new THREE.GLTF2Loader();
 // Load a glTF resource
-var url = "./image/bg4.gltf";
-loader.load(url, function(gltf) {
+loader.load("image/bg4.gltf", function(gltf) {
   model = gltf.scene || gltf.scenes[0];
   model.rotation.x = 90 * (Math.PI / 180);
   model.rotation.y = 270 * (Math.PI / 180);
@@ -116,7 +115,7 @@ loader.load(url, function(gltf) {
   //   var markerRoot = arController.createThreeMarker(markerId);
   //   markerRoot.add(sphere);
   //   arScene.scene.add(markerRoot);
-
+  scene.add(gltf.scene);
   markerRoot.add(model);
 });
 // add a gizmo in the center of the marker
