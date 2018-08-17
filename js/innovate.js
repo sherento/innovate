@@ -103,32 +103,39 @@ const markerControls = new THREEx.ArMarkerControls(
 );
 
 // Instantiate a loader
-const loader = new THREE.GLTF2Loader();
-// Load a glTF resource
-loader.load("image/bg4.gltf", function(gltf) {
-  model = gltf.scene || gltf.scenes[0];
-  model.rotation.x = 90 * (Math.PI / 180);
-  model.rotation.y = 270 * (Math.PI / 180);
-  model.rotation.z = 0 * (Math.PI / 180);
+// const loader = new THREE.GLTF2Loader();
 
-  model = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-  model.scale.x = 100;
-  model.scale.y = 100;
+// // Load a glTF resource
+// loader.load("image/bg4.gltf", function(gltf) {
+//   model = gltf.scene || gltf.scenes[0];
+//   model.rotation.x = 90 * (Math.PI / 180);
+//   model.rotation.y = 270 * (Math.PI / 180);
+//   model.rotation.z = 0 * (Math.PI / 180);
 
-  // arController.loadMarker('image/pattern-letterA.patt', function (markerId) {
-  //   var markerRoot = arController.createThreeMarker(markerId);
-  //   markerRoot.add(sphere);
-  //   arScene.scene.add(markerRoot);
-  scene.add(gltf.scene);
-  markerRoot.add(model);
-});
-// add a gizmo in the center of the marker
-// const loader = new THREE.JSONLoader();
-// loader.load("./model.json", function(geometry) {
 //   model = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-//   scene.add(model);
+//   model.scale.x = 100;
+//   model.scale.y = 100;
+
+//   scene.add(gltf.scene);
 //   markerRoot.add(model);
 // });
+
+//mtl and obj
+const mtlLoader = new THREE.MTLLoader();
+mtlLoader.setTexturePath("/image");
+mtlLoader.setPath("/image");
+mtlLoader.load("bg4.mtl", function(materials) {
+  materials.preload();
+
+  const objLoader = new THREE.OBJLoader();
+  objLoader.setMaterials(materials);
+  objLoader.setPath("/image");
+  objLoader.load("bg4.obj", function(model) {
+    scene.add(model);
+    model.position.y -= 60;
+  });
+  markerRoot.add(model);
+});
 
 ////animate
 const Controller = new function() {
