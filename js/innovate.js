@@ -1,3 +1,4 @@
+import GLTFLoader from "three-gltf-loader";
 //Initilise the scene
 let step = 0;
 let model = null;
@@ -103,7 +104,7 @@ const markerControls = new THREEx.ArMarkerControls(
 );
 
 // Instantiate a loader
-const loader = new THREE.GLTFLoader();
+const loader = new GLTFLoader();
 
 // Load a glTF resource
 loader.load("image/bg4.gltf", function(gltf) {
